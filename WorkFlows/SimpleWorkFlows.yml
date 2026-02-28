@@ -4,15 +4,33 @@ on:
   workflow_dispatch:
 
 jobs:
-  a_simple_job:          # Job ID (no spaces)
+
+  my_self_hosted_job:
+    name: My Self Hosted Job
+    runs-on: self-hosted
+
+    steps:
+      - name: Step in a Self-Hosted Runner
+        id: selfHostedId
+        shell: cmd
+        run: |
+          echo This is a multiline comment
+          echo And this job has been executed from my self-hosted runner
+
+  a_simple_job:
     name: My Simple Job Name
     runs-on: ubuntu-latest
 
     steps:
-      - name: My First Step
-        run: echo "This is the first step from first job"
+      - name: Bash Step
+        id: bashStep
+        run: echo "number=10" >> $GITHUB_OUTPUT
 
-      - name: Step with another shell
-        id: shellStep
+      - name: Use Bash Output
+        run: echo "The number is ${{ steps.bashStep.outputs.number }}"
+
+      - name: Python Step
+        id: pythonStep
         shell: python
-        run: print("This step is using the python shell")
+        run: |
+          print("This step is using the Python shell")
