@@ -2,6 +2,8 @@ name: Workflow Overview
 
 on:
   workflow_dispatch:
+    branches:
+      - main   # Only allow manual triggers on the main branch
 
 jobs:
 
